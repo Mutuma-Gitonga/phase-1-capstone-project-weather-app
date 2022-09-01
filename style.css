@@ -8,6 +8,7 @@ body {
   text-align: center;
 }
 
+/* HEADING 1 PROPERTIES: PAGE TITLE */
 h1#title {
   text-align: center;
   color: aquamarine;
@@ -17,6 +18,7 @@ h1#title {
   border-radius: 10px;
 }
 
+/* FORM PROPERTIES: FLEXBOX ITEM */
 form#cityQuery {
   display: inline-flex;
   border: 2px solid white;
