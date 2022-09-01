@@ -75,7 +75,6 @@ form#cityQuery input[type=submit] {
 .item-2 {
   margin: 10px;
   background-color: #36454F;
-  /* border: 1px solid white; */
   border-radius: 5px;
   color: white;
   text-align: left;
