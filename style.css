@@ -17,3 +17,33 @@ body > h1#title {
   border-radius: 10px;
 }
 
+form#cityQuery {
+  display: inline-flex;
+  border: 2px solid white;
+  flex-direction: column;
+
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+
+  column-gap: 60px;
+  align-content: space-between;
+}
+
+form#cityQuery > label {
+  margin: 10px;
+  text-align: left;
+  font-size: 1.45em;
+  color: aquamarine;
+}
+
+input#searchByCityName {
+  margin: 10px;
+  font-size: 1.45em;
+}
+
+form#cityQuery input[type=submit] {
+  margin: 10px;
+  font-size: 1.45em;
+  background-color: aquamarine;
+}
