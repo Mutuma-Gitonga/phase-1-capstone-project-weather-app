@@ -16,6 +16,7 @@ h1#title {
   display: inline-block;
   padding: 10px;
   border-radius: 10px;
+  margin: 10;
 }
 
 /* FORM PROPERTIES: FLEXBOX ITEM */
@@ -27,9 +28,6 @@ form#cityQuery {
   color: white;
   padding: 20px;
   border-radius: 5px;
-
-  column-gap: 60px;
-  align-content: space-between;
 }
 
 form#cityQuery > label {
@@ -48,4 +46,38 @@ form#cityQuery input[type=submit] {
   margin: 10px;
   font-size: 1.45em;
   background-color: aquamarine;
+}
+
+
+.container {
+  display: inline-flex;
+  border: 2px solid aquamarine;
+  flex-direction: column;
+
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+
+  width: 273px;
+  margin-top: 20px;
+}
+
+.item-1 {
+  margin: 10px;
+  font-size: 1.45em;
+  background-color: #343434;
+  color: white;
+  text-align: left;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.item-2 {
+  margin: 10px;
+  background-color: #36454F;
+  /* border: 1px solid white; */
+  border-radius: 5px;
+  color: white;
+  text-align: left;
+  padding: 5px;
 }
