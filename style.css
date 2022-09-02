@@ -48,6 +48,12 @@ form#cityQuery input[type=submit] {
   background-color: aquamarine;
 }
 
+form#cityQuery p {
+  margin: 10px;
+  background-color: red;
+  color: white;
+}
+
 
 .container {
   display: inline-flex;
