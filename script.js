@@ -6,7 +6,8 @@ const getQueriedCityGpsCoordinates = (queriedCity) => {
     method: 'GET',
     headers: {
       'X-Api-Key': 'n0CwaZayigy3k6UpI8NF/g==41LYGmWHvAVCyauA',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
     }
   })
     .then(res => {
@@ -14,8 +15,12 @@ const getQueriedCityGpsCoordinates = (queriedCity) => {
       // res.ok returns true for success codes (200-299)
       // Throws errors on unsuccessful requests 400/500 status codes, whose status we would otherwise never know
       if(!res.ok) {
-        console.log(res);
-        throw new Error(`Error! Status: ${res.status}`);
+        // console.log(res);
+        if(res.status>=400 && res.status<=499) {
+          throw new Error(`Status ${res.status}. Browser/Client request can't be fulfilled!`);
+        } else if(res.status>=500 && res.status<=599) {
+          throw new Error(`Status ${res.status}. Server has encountered error!`);
+        }
       }
       
       // NB: With Network errors, the .status property is never populated (since error ain't HTTP response) 
