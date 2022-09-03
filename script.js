@@ -1,4 +1,3 @@
-
 const getQueriedCityGpsCoordinates = (queriedCity) => {
 
   // Pass the queriedCity into the request URL
@@ -18,9 +17,6 @@ const getQueriedCityGpsCoordinates = (queriedCity) => {
       if(!res.ok) {
         explicitHttpErrorDefinition(res);
       }
-      
-      // NB: With Network errors, the .status property is never populated (since error ain't HTTP response) 
-      // In addition, CORS error/misspelt URLs errors are caught by the .CATCH block chained to the fetch promise
       
       return res.json();
     })
@@ -67,16 +63,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // ******* INPUT VALIDATION LOGIC START ********
     // *********************************************
     
+    
     // CHECK IF NON-EMPTY STRING SUBMITTED (Has char other than space & length greater than 0)  
     if(/[^ ]/.test(queriedCity) && queriedCity.length !== 0) {
       
         // FIX: ADDED SUPPORT FOR CITIES WITH OTHER CHARS OTHER THAN ALPHAS i.e., NUMBERS, HYPHENS OR SPACES. The test first trims white spaces on both sides of a name
+        // ANOTHER FIX: REJECT INPUTS WITH ONLY NUMBERS
         // EXAMPLES: City with number: "6th of October" || City with Hyphen: "Winston-Salem" || City with Space: "Dar es Salaam"
-        if(!/[^0-9a-zA-Z- ]/.test(queriedCity.trim())) { 
+        if(!/[^0-9a-zA-Z- ]/.test(queriedCity.trim()) && !/^[0-9]+$/.test(queriedCity.trim())) { 
           //If warning exists, remove it since name is now valid 
           if(formHasWarningParagraph())
             removeWarningParagraph();
-          
+            // 0-9
           // Clear input field
           clearTextField();
 
@@ -158,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-
+// Function holding the class 400 and class 500 errors thrown by any of the two fetch APIs
 function explicitHttpErrorDefinition(res) {
   if(res.status>=400 && res.status<=499) {
     throw new Error(`Status ${res.status}. Client request can't be fulfilled!`);
