@@ -1,3 +1,38 @@
+const getQueriedCityWeatherInformation = (lat,lon) => {
+
+  // Rounding latitude & Longitude to 2 decimal places
+  let latFixed = parseFloat(lat).toFixed(2);
+  let lonFixed = parseFloat(lon).toFixed(2);
+  let apiKey = "830b9f0224e84c684aaf9fce329b4b91"; 
+  let lang = "en";
+  let units = "metric";
+  let excludeTheseDataPoints = "current,minutely,hourly,alerts";
+  let queryWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latFixed}&lon=${lonFixed}&exclude=${excludeTheseDataPoints}&units=${units}&appid=${apiKey}&lang=${lang}`;
+
+  // Passing the queryWeatherUrl to the fetch API
+  fetch(queryWeatherUrl) 
+    .then(res => {
+      // Check if HTTP response successful (res.ok)
+      // res.ok returns true for success codes (200-299)
+      // Throws errors on unsuccessful requests 400/500 status codes, whose status we would otherwise never know
+      if(!res.ok) {
+        explicitHttpErrorDefinition(res);
+      }
+      
+      return res.json();
+    })
+      .then(weatherData => {
+
+        console.log(weatherData);
+
+      })
+        .catch(err => {
+          alert(err);
+        });
+}
+
+
+
 const getQueriedCityGpsCoordinates = (queriedCity) => {
 
   // Pass the queriedCity into the request URL
@@ -47,7 +82,6 @@ const getQueriedCityGpsCoordinates = (queriedCity) => {
 }
 
 
-
 document.addEventListener('DOMContentLoaded', () => {
 
   // Select form object
@@ -63,18 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // ******* INPUT VALIDATION LOGIC START ********
     // *********************************************
     
-    
+
     // CHECK IF NON-EMPTY STRING SUBMITTED (Has char other than space & length greater than 0)  
     if(/[^ ]/.test(queriedCity) && queriedCity.length !== 0) {
       
         // FIX: ADDED SUPPORT FOR CITIES WITH OTHER CHARS OTHER THAN ALPHAS i.e., NUMBERS, HYPHENS OR SPACES. The test first trims white spaces on both sides of a name
         // ANOTHER FIX: REJECT INPUTS WITH ONLY NUMBERS
         // EXAMPLES: City with number: "6th of October" || City with Hyphen: "Winston-Salem" || City with Space: "Dar es Salaam"
-        if(!/[^0-9a-zA-Z- ]/.test(queriedCity.trim()) && !/^[0-9]+$/.test(queriedCity.trim())) { 
+        if(/^[0-9a-zA-Z- ]+$/.test(queriedCity.trim()) && !/^[0-9]+$/.test(queriedCity.trim())) { 
           //If warning exists, remove it since name is now valid 
           if(formHasWarningParagraph())
             removeWarningParagraph();
-            // 0-9
+          
           // Clear input field
           clearTextField();
 
