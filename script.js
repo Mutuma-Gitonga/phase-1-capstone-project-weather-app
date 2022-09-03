@@ -1,3 +1,4 @@
+
 const getQueriedCityGpsCoordinates = (queriedCity) => {
 
   // Pass the queriedCity into the request URL
@@ -37,6 +38,9 @@ const getQueriedCityGpsCoordinates = (queriedCity) => {
           // These coordinates are extracted from the first array entry as it's most relevant (internationally renowned)
           let lat = coordinates[0]["latitude"];
           let lon = coordinates[0]["longitude"];;
+
+          // Pass geo coordinates to weather info function
+          getQueriedCityWeatherInformation(lat,lon);
         }
           // Otherwise throw an error that city not found
           else {
@@ -44,9 +48,6 @@ const getQueriedCityGpsCoordinates = (queriedCity) => {
             throw new Error ("City not found in database! Check spelling or try another one.");
           }
         
-        // Pass geo coordinates to weather info function
-        // getQueriedCityWeatherInformation(lat,lon);
-        console.log(coordinates);
       })
         .catch(err => {
           // Pop up the thrown error message alert
@@ -71,11 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // ******* INPUT VALIDATION LOGIC START ********
     // *********************************************
     
-    // CHECK IF NON-EMPTY STRING SUBMITTED (may have some white space & alphanumeric characters)  
+    // CHECK IF NON-EMPTY STRING SUBMITTED (Has char other than space & length greater than 0)  
     if(/[^ ]/.test(queriedCity) && queriedCity.length !== 0) {
       
-        // Trim queriedCity of any white spaces on both sides then use REGEX to affirm it ONLY HAS ALPHA CHARACTERS
-        if(!/[^a-zA-Z]/.test(queriedCity.trim())) { 
+        // FIX: ADDED SUPPORT FOR CITIES WITH OTHER CHARS OTHER THAN ALPHAS i.e., NUMBERS, HYPHENS OR SPACES. The test first trims white spaces on both sides of a name
+        // EXAMPLES: City with number: "6th of October" || City with Hyphen: "Winston-Salem" || City with Space: "Dar es Salaam"
+        if(!/[^0-9a-zA-Z- ]/.test(queriedCity.trim())) { 
           //If warning exists, remove it since name is now valid 
           if(formHasWarningParagraph())
             removeWarningParagraph();
@@ -87,18 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
           getQueriedCityGpsCoordinates(queriedCity); 
           
         } 
-          // IF NON-ALPHA CHARS FOUND:
+          // FIX: RUNS FOR CITY NAMES WITH CHARS OTHER THAN ALPHA, NUMBER, HYPHEN, OR SPACE CHARS
           else {
             clearTextField();
 
             if(formHasWarningParagraph()) {
               removeWarningParagraph();
             // Append warning if invalid input found a consecutive time 
-            appendNonAlphaCharsWarning();
+            appendNonAlphaNumSpaceHyphenCharsWarning();
             } 
               else {
                 // Append warning first time
-                appendNonAlphaCharsWarning();
+                appendNonAlphaNumSpaceHyphenCharsWarning();
               }
           }
     } 
@@ -131,10 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   // Validation function 2
-  // Insert non-alphabetic character warning paragraph into DOM
-  function appendNonAlphaCharsWarning() {
+  // Insert non-alphanumeric, non-space & non-hyphen character warning paragraph into DOM
+  function appendNonAlphaNumSpaceHyphenCharsWarning() {
     const p = document.createElement('p');
-    p.innerHTML = "Invalid! Only alphabets expected! <br> Re-enter a valid city name";
+    p.innerHTML = "Only names with alphanumerics, <br> spaces or hyphens allowed! <br> Re-enter a valid city name";
     p.className = "form#cityQuery p";
     cityQueryForm.appendChild(p);
   }
