@@ -1,8 +1,74 @@
-const appendWeatherInfoToDOM = (weatherData) => {
-  console.log(weatherData);
+const appendWeatherInfoToDOM = (weatherData,queriedCity) => {
+  
+  // Fetch icons and their descriptions from the weather data object 
+  let icon = weatherData["weather"][0]["icon"];
+  let iconName = weatherData["weather"][0]["main"]; // e.g. "Clouds"
+  let iconDescription = weatherData["weather"][0]["description"]; // e.g. "scatterred clouds"
+
+  let temp = weatherData["main"]["temp"]; // Degrees celcius
+  let humidity = weatherData["main"]["humidity"]; // Relative %
+
+
+  // Remove a weather section card if already existing
+  if(document.querySelector('body').contains(document.querySelector('#container')))
+    document.querySelector('#container').remove();
+  
+  // Create 'section' semantic element to hold weather information
+  const weatherSectionCard = document.createElement('section');
+  // Append section to the body element
+  document.querySelector('body').appendChild(weatherSectionCard);
+  
+  // Create div flex container
+  const divContainer = document.createElement('div');
+  divContainer.id = "container";
+  // Append flex container to section element
+  weatherSectionCard.appendChild(divContainer);
+
+
+  // Create flex container child 1
+  const divElement1 = document.createElement('div');
+  divElement1.className = "flex-item item-1";
+  // Append Title to the card
+  divElement1.innerHTML = `${queriedCity.charAt(0).toUpperCase()}${queriedCity.slice(1)} City Current Weather:`;
+  // Append it to the flex container
+  divContainer.appendChild(divElement1);
+
+  // Create flex container child 2
+  const divElement2 = document.createElement('div');
+  divElement2.className = "flex-item item-2";
+  // Append it to flex container
+  divContainer.appendChild(divElement2);
+
+
+  // Create image element with its requisite attributes
+  const divElem2Image = document.createElement('img');
+  const srcAttr = document.createAttribute("src");
+  srcAttr.value = `http://openweathermap.org/img/wn/${icon}.png`;
+  divElem2Image.setAttributeNode(srcAttr);
+  const altAttr = document.createAttribute('alt');
+  altAttr.value = `Current weather icon`;
+  divElem2Image.setAttributeNode(altAttr);
+  // Append image to the second flex child 
+  divElement2.appendChild(divElem2Image);
+
+  // Create 3 paragraph elements and append them to the 2nd flex child
+  for (let i = 0; i < 3; i++) {
+    let divElem2Paragraph = document.createElement('p');
+    
+    if(i === 0)
+    divElem2Paragraph.innerHTML = `<span>${iconName}:</span> ${iconDescription.charAt(0).toUpperCase()}${iconDescription.slice(1)}`;
+    else if(i === 1)
+    divElem2Paragraph.innerHTML = `<span>Temperature:</span> ${temp} &#176;C`;
+    else if(i === 2)
+    divElem2Paragraph.innerHTML = `<span>Humidity:</span> ${humidity}&#x25;`;
+    
+    divElement2.appendChild(divElem2Paragraph);
+  }
+
 }
 
-const getQueriedCityWeatherInformation = (lat,lon) => {
+
+const getQueriedCityWeatherInformation = (lat,lon,queriedCity) => {
 
   // Rounding latitude & Longitude to 2 decimal places
   let latFixed = parseFloat(lat).toFixed(2);
@@ -30,14 +96,13 @@ const getQueriedCityWeatherInformation = (lat,lon) => {
       .then(weatherData => {
 
         // Pass weather data object to the DOM manipulation function
-        appendWeatherInfoToDOM(weatherData);
+        appendWeatherInfoToDOM(weatherData,queriedCity);
 
       })
         .catch(err => {
           alert(err);
         });
 }
-
 
 
 const getQueriedCityGpsCoordinates = (queriedCity) => {
@@ -73,7 +138,7 @@ const getQueriedCityGpsCoordinates = (queriedCity) => {
           let lon = coordinates[0]["longitude"];;
 
           // Pass geo coordinates to weather info function
-          getQueriedCityWeatherInformation(lat,lon);
+          getQueriedCityWeatherInformation(lat,lon,queriedCity);
         }
           // Otherwise throw an error that city not found
           else {

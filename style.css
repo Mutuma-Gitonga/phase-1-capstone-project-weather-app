@@ -32,7 +32,7 @@ form#cityQuery {
 
 form#cityQuery > label {
   margin: 10px;
-  text-align: left;
+  text-align: center;
   font-size: 1.45em;
   color: aquamarine;
 }
@@ -55,7 +55,7 @@ form#cityQuery p {
 }
 
 
-.container {
+#container {
   display: inline-flex;
   border: 2px solid aquamarine;
   flex-direction: column;
@@ -73,7 +73,7 @@ form#cityQuery p {
   font-size: 1.45em;
   background-color: #343434;
   color: white;
-  text-align: left;
+  text-align: center;
   padding: 5px;
   border-radius: 5px;
 }
@@ -83,6 +83,16 @@ form#cityQuery p {
   background-color: #36454F;
   border-radius: 5px;
   color: white;
-  text-align: left;
+  text-align: center;
   padding: 5px;
+}
+
+.item-2 > p {
+  margin: 0;
+  padding: 3px;
+  color: aquamarine;
+}
+
+.item-2 > p:nth-child(n+2) > span {
+  color: white;
 }
