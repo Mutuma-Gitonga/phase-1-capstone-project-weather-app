@@ -157,6 +157,10 @@ const getQueriedCityGpsCoordinates = (queriedCity) => {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // Select form container and set it to equal the heading 1 element's width
+  document.querySelector('#cityQuery').width = document.querySelector('#title').offsetWidth;
+  document.querySelector('#title').width = document.querySelector('#cityQuery').width;
+
   // Select form object
   const cityQueryForm = document.querySelector('#cityQuery');
 
