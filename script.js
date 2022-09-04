@@ -1,3 +1,7 @@
+const appendWeatherInfoToDOM = (weatherData) => {
+  console.log(weatherData);
+}
+
 const getQueriedCityWeatherInformation = (lat,lon) => {
 
   // Rounding latitude & Longitude to 2 decimal places
@@ -16,14 +20,17 @@ const getQueriedCityWeatherInformation = (lat,lon) => {
       // res.ok returns true for success codes (200-299)
       // Throws errors on unsuccessful requests 400/500 status codes, whose status we would otherwise never know
       if(!res.ok) {
+        // Call function to print the explicit HTTP Errors
         explicitHttpErrorDefinition(res);
       }
       
+      // Convert the JSON data into an JS Object
       return res.json();
     })
       .then(weatherData => {
 
-        console.log(weatherData);
+        // Pass weather data object to the DOM manipulation function
+        appendWeatherInfoToDOM(weatherData);
 
       })
         .catch(err => {
