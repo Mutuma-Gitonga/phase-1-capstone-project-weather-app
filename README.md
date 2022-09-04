@@ -13,5 +13,6 @@ This app furnishes a user with current weather of any city they key in as long a
 
 ## Extra Functionality I Want to Add
 - Allowing user to set home location, then affixing it's current weather info on the app which refreshes periodically, say every 3 hours. 
-- Adding a progress loading indicator as a user awaits the weather details to fetch and display. 
+- Adding a progress loading indicator as a user awaits the weather details to fetch and display.
+- Use document fragments to create the weather data section elements to improve performance.
 
