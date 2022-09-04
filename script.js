@@ -55,6 +55,7 @@ const appendWeatherInfoToDOM = (weatherData,queriedCity) => {
   for (let i = 0; i < 3; i++) {
     let divElem2Paragraph = document.createElement('p');
     
+    // Add logic to add elements to appropriate paragraph element
     if(i === 0)
     divElem2Paragraph.innerHTML = `<span>${iconName}:</span> ${iconDescription.charAt(0).toUpperCase()}${iconDescription.slice(1)}`;
     else if(i === 1)
